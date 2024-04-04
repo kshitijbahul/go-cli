@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/kshitijbahul/go-cli/todo"
 	"github.com/spf13/cobra"
 )
 
@@ -24,8 +25,16 @@ to quickly create a Cobra application.`,
 
 func addRun(cmd *cobra.Command, args []string) {
 	fmt.Println("add called")
+	items := []todo.Item{} // This is an example of composite litral in go creates a new value of the given type
+	for _, x := range args {
+		fmt.Println(x)
+		items = append(items, todo.Item{Text: x})
+	}
+	fmt.Println(items)
 }
 
+// The package can have multiple inits to initialize multiple things
+// The Order of init call is not guaranteed
 func init() {
 	rootCmd.AddCommand(addCmd)
 
