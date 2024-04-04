@@ -31,6 +31,7 @@ func addRun(cmd *cobra.Command, args []string) {
 		items = append(items, todo.Item{Text: x})
 	}
 	fmt.Printf("%#v\n", items)
+	todo.SaveItems("x", items)
 }
 
 // The package can have multiple inits to initialize multiple things
