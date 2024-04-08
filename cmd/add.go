@@ -25,7 +25,10 @@ to quickly create a Cobra application.`,
 
 func addRun(cmd *cobra.Command, args []string) {
 	fmt.Println("add called")
-	items := []todo.Item{} // This is an example of composite litral in go creates a new value of the given type
+	items, err := todo.ReadItems("./todos.json")
+	if err != nil {
+		fmt.Printf("%v", err)
+	}
 	for _, x := range args {
 		fmt.Println(x)
 		items = append(items, todo.Item{Text: x})
