@@ -6,4 +6,11 @@
 
 ```cobra-cli add list ```
 
-### To add a new Flag for the commands
+### To add a new Flag for the commands globally 
+-> Add it to the Root file
+
+### To add a new Flag for the commands locally i.e only for a specific command 
+-> Add the Flag to the individual file of teh command 
+
+### Add a priority using 
+```./go-cli add "Top Priority" -p1```

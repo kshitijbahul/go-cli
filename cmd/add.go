@@ -23,6 +23,8 @@ to quickly create a Cobra application.`,
 	Run: addRun,
 }
 
+var priority int
+
 func addRun(cmd *cobra.Command, args []string) {
 	fmt.Println("add called")
 	items, err := todo.ReadItems(dataFile)
@@ -31,7 +33,9 @@ func addRun(cmd *cobra.Command, args []string) {
 	}
 	for _, x := range args {
 		fmt.Println(x)
-		items = append(items, todo.Item{Text: x})
+		item := todo.Item{Text: x}
+		item.SetPriority(priority)
+		items = append(items, item)
 	}
 	fmt.Printf("%#v\n", items)
 	todo.SaveItems(dataFile, items)
@@ -41,7 +45,7 @@ func addRun(cmd *cobra.Command, args []string) {
 // The Order of init call is not guaranteed
 func init() {
 	rootCmd.AddCommand(addCmd)
-
+	addCmd.Flags().IntVarP(&priority, "priority", "p", 2, "Priority: 1,2,3")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

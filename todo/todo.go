@@ -7,7 +7,8 @@ import (
 )
 
 type Item struct {
-	Text string
+	Text     string
+	Priority int
 }
 
 func SaveItems(filename string, items []Item) error {
@@ -33,4 +34,17 @@ func ReadItems(filename string) ([]Item, error) {
 		return []Item{}, err
 	}
 	return items, nil
+}
+
+func (i *Item) SetPriority(pri int) { // This is an example of writing a method for a reciever
+	// The receiver here is of type Item
+	fmt.Println("Came in SetPriority with priority", pri)
+	switch pri {
+	case 1:
+		i.Priority = 1
+	case 3:
+		i.Priority = 3
+	default:
+		i.Priority = 2
+	}
 }
