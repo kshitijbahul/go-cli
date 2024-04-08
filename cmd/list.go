@@ -17,7 +17,7 @@ var listCmd = &cobra.Command{
 	Long: `This command is used to get all the todos that you are lookign for. 
 	It also has a Priority fields and and a created at and Updated field`,
 	Run: func(cmd *cobra.Command, args []string) {
-		list, err := todo.ReadItems("./todos.json")
+		list, err := todo.ReadItems(dataFile)
 		if err != nil {
 			fmt.Printf("%v", err)
 		}

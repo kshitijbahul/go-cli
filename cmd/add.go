@@ -25,7 +25,7 @@ to quickly create a Cobra application.`,
 
 func addRun(cmd *cobra.Command, args []string) {
 	fmt.Println("add called")
-	items, err := todo.ReadItems("./todos.json")
+	items, err := todo.ReadItems(dataFile)
 	if err != nil {
 		fmt.Printf("%v", err)
 	}
@@ -34,7 +34,7 @@ func addRun(cmd *cobra.Command, args []string) {
 		items = append(items, todo.Item{Text: x})
 	}
 	fmt.Printf("%#v\n", items)
-	todo.SaveItems("./todos.json", items)
+	todo.SaveItems(dataFile, items)
 }
 
 // The package can have multiple inits to initialize multiple things
