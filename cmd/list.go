@@ -5,6 +5,9 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+	"text/tabwriter"
 
 	"github.com/kshitijbahul/go-cli/todo"
 	"github.com/spf13/cobra"
@@ -16,13 +19,21 @@ var listCmd = &cobra.Command{
 	Short: "Use this command to get the list of all the todos",
 	Long: `This command is used to get all the todos that you are lookign for. 
 	It also has a Priority fields and and a created at and Updated field`,
-	Run: func(cmd *cobra.Command, args []string) {
-		list, err := todo.ReadItems(dataFile)
-		if err != nil {
-			fmt.Printf("%v", err)
-		}
-		fmt.Println("Your Todos are:", list)
-	},
+	Run: listRun,
+}
+
+func listRun(cmd *cobra.Command, args []string) {
+	items, err := todo.ReadItems(dataFile)
+	if err != nil {
+		fmt.Printf("%v", err)
+	}
+	fmt.Println("Your Todos are:", items)
+	w := tabwriter.NewWriter(os.Stdout, 3, 0, 1, ' ', 0)
+	for _, i := range items {
+		fmt.Fprintln(w, strconv.Itoa(i.Priority)+"\t"+i.Text+"\t")
+	}
+	w.Flush()
+
 }
 
 func init() {
