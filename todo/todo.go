@@ -9,6 +9,7 @@ import (
 type Item struct {
 	Text     string
 	Priority int
+	position int
 }
 
 func SaveItems(filename string, items []Item) error {
@@ -32,6 +33,9 @@ func ReadItems(filename string) ([]Item, error) {
 	var items []Item
 	if err := json.Unmarshal(b, &items); err != nil { // Special Syntax here for the if block
 		return []Item{}, err
+	}
+	for i, _ := range items {
+		items[i].position = i + 1
 	}
 	return items, nil
 }
