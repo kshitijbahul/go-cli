@@ -48,3 +48,14 @@ func (i *Item) SetPriority(pri int) { // This is an example of writing a method 
 		i.Priority = 2
 	}
 }
+
+func (i *Item) PrettyP() string {
+	switch i.Priority {
+	case 1:
+		return "(1)"
+	case 3:
+		return "(3)"
+	default:
+		return " "
+	}
+}
