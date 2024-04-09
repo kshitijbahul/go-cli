@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"sort"
 	"text/tabwriter"
 
 	"github.com/kshitijbahul/go-cli/todo"
@@ -27,6 +28,8 @@ func listRun(cmd *cobra.Command, args []string) {
 		fmt.Printf("%v", err)
 	}
 	fmt.Println("Your Todos are:", items)
+	sort.Sort(todo.ByPri(items))
+	fmt.Println("Your Todos after sorting are:", items)
 	w := tabwriter.NewWriter(os.Stdout, 3, 0, 1, ' ', 0)
 	for _, i := range items {
 		fmt.Fprintln(w, i.PrettyP()+"\t"+i.Text+"\t")

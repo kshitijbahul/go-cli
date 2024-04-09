@@ -63,3 +63,22 @@ func (i *Item) PrettyP() string {
 		return " "
 	}
 }
+
+// ByPri implements sort.Interface for []Item based on the priority and position
+type ByPri []Item
+
+func (s ByPri) Len() int {
+	return len(s)
+}
+
+// This is a swap by the position  becuase labnguage is based on pointers
+func (s ByPri) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+
+func (s ByPri) Less(i, j int) bool {
+	if s[i].Priority == s[j].Priority {
+		return s[i].position < s[j].position
+	}
+	return s[i].Priority < s[j].Priority
+}
