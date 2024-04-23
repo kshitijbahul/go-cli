@@ -13,6 +13,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	doneOpt bool
+)
+
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
@@ -32,10 +36,11 @@ func listRun(cmd *cobra.Command, args []string) {
 	fmt.Println("Your Todos after sorting are:", items)
 	w := tabwriter.NewWriter(os.Stdout, 3, 0, 1, ' ', 0)
 	for _, i := range items {
-		fmt.Fprintln(w, i.GetPosition()+"\t"+i.PrettyDone()+"\t"+i.PrettyP()+"\t"+i.Text+"\t")
+		if i.Done == doneOpt {
+			fmt.Fprintln(w, i.GetPosition()+"\t"+i.PrettyDone()+"\t"+i.PrettyP()+"\t"+i.Text+"\t")
+		}
 	}
 	w.Flush()
-
 }
 
 func init() {
@@ -50,4 +55,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	listCmd.Flags().BoolVar(&doneOpt, "done", false, " Show 'done' Todos")
 }
