@@ -15,6 +15,7 @@ import (
 
 var (
 	doneOpt bool
+	allOpt  bool
 )
 
 // listCmd represents the list command
@@ -36,7 +37,7 @@ func listRun(cmd *cobra.Command, args []string) {
 	fmt.Println("Your Todos after sorting are:", items)
 	w := tabwriter.NewWriter(os.Stdout, 3, 0, 1, ' ', 0)
 	for _, i := range items {
-		if i.Done == doneOpt {
+		if allOpt || i.Done == doneOpt {
 			fmt.Fprintln(w, i.GetPosition()+"\t"+i.PrettyDone()+"\t"+i.PrettyP()+"\t"+i.Text+"\t")
 		}
 	}
@@ -56,4 +57,5 @@ func init() {
 	// is called directly, e.g.:
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	listCmd.Flags().BoolVar(&doneOpt, "done", false, " Show 'done' Todos")
+	listCmd.Flags().BoolVar(&allOpt, "all", false, "Show all todos")
 }
