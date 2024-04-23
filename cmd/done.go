@@ -11,6 +11,7 @@ import (
 
 	"github.com/kshitijbahul/go-cli/todo"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // doneCmd represents the done command
@@ -23,7 +24,7 @@ var doneCmd = &cobra.Command{
 
 func doneRun(cmd *cobra.Command, args []string) {
 
-	items, err := todo.ReadItems(dataFile)
+	items, err := todo.ReadItems(viper.GetString("dataFile"))
 	i, err := strconv.Atoi(args[0])
 	if err != nil {
 		log.Fatalln(args[0], "is not a valid label\n", err)
@@ -32,7 +33,7 @@ func doneRun(cmd *cobra.Command, args []string) {
 		items[i-1].Done = true
 		fmt.Printf("%q %v\n", items[i-1].Text, "marked as done")
 		sort.Sort(todo.ByPri(items))
-		todo.SaveItems(dataFile, items)
+		todo.SaveItems(viper.GetString("dataFile"), items)
 	} else {
 		log.Println(i, "doesn't match any item")
 	}

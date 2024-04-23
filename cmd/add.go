@@ -8,6 +8,7 @@ import (
 
 	"github.com/kshitijbahul/go-cli/todo"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // addCmd represents the add command
@@ -27,7 +28,7 @@ var priority int
 
 func addRun(cmd *cobra.Command, args []string) {
 	fmt.Println("add called")
-	items, err := todo.ReadItems(dataFile)
+	items, err := todo.ReadItems(viper.GetString("dataFile"))
 	if err != nil {
 		fmt.Printf("%v", err)
 	}
@@ -38,7 +39,7 @@ func addRun(cmd *cobra.Command, args []string) {
 		items = append(items, item)
 	}
 	fmt.Printf("%#v\n", items)
-	todo.SaveItems(dataFile, items)
+	todo.SaveItems(viper.GetString("dataFile"), items)
 }
 
 // The package can have multiple inits to initialize multiple things

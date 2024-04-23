@@ -18,3 +18,10 @@
 
 ### Mark a todo as done
 ```go run main.go done (a todo)```
+
+
+#### Viper configuration Management 
+
+To use the program set the env variable 
+
+```export TODO_DATAFILE=$HOME/customTodos.json````

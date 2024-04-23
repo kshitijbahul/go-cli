@@ -9,9 +9,12 @@ import (
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var dataFile string
+
+var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -34,7 +37,22 @@ func Execute() {
 	}
 }
 
+func initConfig() {
+	viper.SetConfigName(".todos")
+	viper.AddConfigPath("$HOME")
+	viper.AutomaticEnv()
+
+	viper.SetEnvPrefix(("todos"))
+
+	// Read vconfig file if its found
+	if err := viper.ReadInConfig(); err == nil {
+		fmt.Println("Using config file : ", viper.ConfigFileUsed())
+	}
+}
+
 func init() {
+	cobra.OnInitialize(initConfig)
+
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
@@ -51,4 +69,5 @@ func init() {
 		os.Exit(1)
 	}
 	rootCmd.PersistentFlags().StringVar(&dataFile, "datafile", home+string(os.PathSeparator)+".todos.json", "data file to store todos")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.todosconfig.yaml")
 }
