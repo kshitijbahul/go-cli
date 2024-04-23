@@ -32,7 +32,7 @@ func listRun(cmd *cobra.Command, args []string) {
 	fmt.Println("Your Todos after sorting are:", items)
 	w := tabwriter.NewWriter(os.Stdout, 3, 0, 1, ' ', 0)
 	for _, i := range items {
-		fmt.Fprintln(w, i.GetPosition()+"\t"+i.PrettyP()+"\t"+i.Text+"\t")
+		fmt.Fprintln(w, i.GetPosition()+"\t"+i.PrettyDone()+"\t"+i.PrettyP()+"\t"+i.Text+"\t")
 	}
 	w.Flush()
 

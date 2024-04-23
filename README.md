@@ -14,3 +14,7 @@
 
 ### Add a priority using 
 ```./go-cli add "Top Priority" -p1```
+
+
+### Mark a todo as done
+```go run main.go done (a todo)```

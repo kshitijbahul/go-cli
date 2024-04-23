@@ -10,6 +10,7 @@ type Item struct {
 	Text     string
 	Priority int
 	Position int
+	Done     bool
 }
 
 func SaveItems(filename string, items []Item) error {
@@ -64,6 +65,13 @@ func (i *Item) PrettyP() string {
 	}
 }
 
+func (i *Item) PrettyDone() string {
+	if i.Done {
+		return "X"
+	}
+	return ""
+}
+
 func (i *Item) GetPosition() string {
 	return fmt.Sprintf("%d", i.Position)
 }
@@ -75,12 +83,16 @@ func (s ByPri) Len() int {
 	return len(s)
 }
 
-// This is a swap by the Position  becuase labnguage is based on pointers
+// This is a swap by the Position  becuase language is based on pointers
 func (s ByPri) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 
 func (s ByPri) Less(i, j int) bool {
+	// Check of completed ones
+	if s[i].Done != s[j].Done {
+		return s[i].Done
+	}
 	if s[i].Priority == s[j].Priority {
 		return s[i].Position < s[j].Position
 	}
